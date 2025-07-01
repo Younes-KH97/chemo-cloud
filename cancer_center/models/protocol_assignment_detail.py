@@ -9,5 +9,5 @@ class ProtocolAssignmentDetail(models.Model):
 
     day_number = fields.Integer('day_number')
     madication_id = fields.Many2one('cancer_center.medication', 
-                                    string='madication')
+                                    string='madication_id')
 

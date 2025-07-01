@@ -11,6 +11,7 @@ class ProtocolAssignment(models.Model):
                                               string='prot_assig_detail')
 
     date_start = fields.Date(string="Start Date", required=True)
+    interval = fields.Integer('interval')
 
 
 

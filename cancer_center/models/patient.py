@@ -8,3 +8,16 @@ class Patient(models.Model):
     phone_number = fields.Char()
 
     protocols_ids = fields.Many2many('cancer_center.protocol', string='protocols')
+    protocol_assignment_ids = fields.One2many('cancer_center.protocol.assignment', 'patient_id', string='protocol_assignment')
+
+    def action_open_program_form(self):
+        return {
+            'name': 'Assign Program',
+            'type': 'ir.actions.act_window',
+            'res_model': 'cancer_center.protocol.assignment',
+            'view_mode': 'form',
+            'target': 'new',  # shows in side popup
+            'context': {
+                'default_patient_id': self.id
+            }
+        }

@@ -5,10 +5,14 @@
         <field name="model">cancer_center.patient</field>
         <field name="arch" type="xml">
             <form string="">
+                <header>
+                    <button string="Commencer un protocol" name="action_open_program_form"  type="object" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name"></field>
                         <field name="dob"></field>
+                        <field name="protocol_assignment_ids" />
                     </group>
                 </sheet>
             </form>
