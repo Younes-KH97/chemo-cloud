@@ -7,7 +7,7 @@ class Patient(models.Model):
     address_of_residence = fields.Char() # Make a Select from a json of wilayas
     phone_number = fields.Char()
 
-    protocols_ids = fields.Many2many('cancer_center.protocol', string='protocols')
+    # protocols_ids = fields.Many2many('cancer_center.protocol', string='protocols')
     protocol_assignment_ids = fields.One2many('cancer_center.protocol.assignment', 'patient_id', string='protocol_assignment')
 
     def action_open_program_form(self):
@@ -18,6 +18,7 @@ class Patient(models.Model):
             'view_mode': 'form',
             'target': 'new',  # shows in side popup
             'context': {
-                'default_patient_id': self.id
+                'default_patient_id': self.id,
+                'hide_cures': True,
             }
         }

@@ -10,7 +10,7 @@
                         <field name="day_number"></field>
                     </group>
                     <group>
-                        <field name="madication_id"></field>
+                        <field name="medication_id"></field>
                     </group>
                 </sheet>
             </form>

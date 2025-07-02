@@ -8,6 +8,6 @@ class ProtocolAssignmentDetail(models.Model):
                                              string='protocol_assignment_detail')
 
     day_number = fields.Integer('day_number')
-    madication_id = fields.Many2one('cancer_center.medication', 
-                                    string='madication_id')
+    medication_id = fields.Many2one('cancer_center.medication', 
+                                    string='medication_id')
 

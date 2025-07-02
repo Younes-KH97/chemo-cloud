@@ -11,6 +11,7 @@
         'views/protocol_view.xml',
         'views/medication_view.xml',
         'views/patient_view.xml',
+        'views/protocol_assignment.xml',
         'views/protocol_assignment_detail.xml',
         'views/cancer_center_menus.xml'
     ]
