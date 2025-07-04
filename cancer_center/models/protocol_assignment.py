@@ -20,22 +20,34 @@ class ProtocolAssignment(models.Model):
 
     @api.model_create_multi
     def create(self, vals):
+        prot_assig_record = super().create(vals)
         for val in vals:
             interval = val["interval"]
             date_start = val["date_start"]
             curr_date = datetime.strptime(date_start, '%Y-%m-%d').date()
             number_of_cures = val["number_of_cures"]
             for i in range(number_of_cures):
-                for protocol_detail in val['protocol_assignment_detail_ids']:
+                for index,protocol_detail in enumerate(val['protocol_assignment_detail_ids']):
+                    if index > 0: 
+                        curr_date = curr_date + timedelta(days=protocol_detail[2]["day_number"])
                     self.env["cancer_center.cure"].create({
                         "medication_id": protocol_detail[2]["medication_id"],
                         "weight": 66.0,
-                        "date_of_cure": curr_date
+                        "date_of_cure": curr_date,
+                        "protocol_assignment_id": prot_assig_record.id
                     })
-                    curr_date = curr_date + timedelta(days=protocol_detail[2]["day_number"])
                 curr_date = curr_date + timedelta(days=interval)
-        return super().create(val)
+        return prot_assig_record
 
 
     def show_planning(self):
-        pass
+        return {
+            'name': 'All program',
+            'type': 'ir.actions.act_window',
+            'res_model': 'cancer_center.cure',
+            'view_mode': 'tree',
+            'target': 'new',  # shows in side popup
+            'context': {
+                'default_protocol_assignment_id': self.id,
+            }
+        }

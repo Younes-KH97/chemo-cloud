@@ -4,7 +4,7 @@ class Cure(models.Model):
     _name = "cancer_center.cure"
     _description = "Chemotherapy cure"
 
-    protocol_assignment_id = fields.Many2one('cancer_center.protocol_assignment', 
+    protocol_assignment_id = fields.Many2one('cancer_center.protocol.assignment', 
                                              string='protocol_assignment')
     
     tall = fields.Float('tall')
