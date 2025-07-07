@@ -18,7 +18,6 @@ class Patient(models.Model):
             'view_mode': 'form',
             'target': 'new',  # shows in side popup
             'context': {
-                'default_patient_id': self.id,
-                'hide_cures': True,
+                'default_patient_id': self.id
             }
         }

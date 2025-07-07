@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from datetime import date, timedelta, datetime
+from datetime import timedelta, datetime
 
 class ProtocolAssignment(models.Model):
     _name = "cancer_center.protocol.assignment"
@@ -9,7 +9,7 @@ class ProtocolAssignment(models.Model):
     protocol_id = fields.Many2one('cancer_center.protocol', string='protocol')
     protocol_assignment_detail_ids = fields.One2many('cancer_center.protocol.assignment.detail', 
                                              'protocol_assignment_id', 
-                                              string='prot_assig_detail')
+                                              string='prot assig detail')
     cure_ids = fields.One2many('cancer_center.cure', 'protocol_assignment_id', string='cures')
     
 
@@ -41,13 +41,15 @@ class ProtocolAssignment(models.Model):
 
 
     def show_planning(self):
+        self.ensure_one()
         return {
             'name': 'All program',
             'type': 'ir.actions.act_window',
             'res_model': 'cancer_center.cure',
             'view_mode': 'tree',
             'target': 'new',  # shows in side popup
+            'domain': [('protocol_assignment_id', '=', self.id)],
             'context': {
-                'default_protocol_assignment_id': self.id,
+                'default_protocol_assignment_id': self.id
             }
         }
