@@ -1,1 +1,1 @@
-from . import patient, medication, protocol, protocol_assignment, protocol_assignment_detail, cure
+from . import patient, medication, protocol, protocol_assignment, protocol_assignment_detail, cure, reaction

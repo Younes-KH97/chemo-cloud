@@ -47,7 +47,7 @@ class ProtocolAssignment(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'cancer_center.cure',
             'view_mode': 'tree',
-            'target': 'new',  # shows in side popup
+            'target': 'main',  # shows in side popup
             'domain': [('protocol_assignment_id', '=', self.id)],
             'context': {
                 'default_protocol_assignment_id': self.id

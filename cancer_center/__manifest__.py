@@ -14,6 +14,7 @@
         'views/protocol_assignment.xml',
         'views/protocol_assignment_detail.xml',
         'views/cure_view.xml',
+        'views/reaction_view.xml',
         'views/cancer_center_menus.xml'
     ]
 }

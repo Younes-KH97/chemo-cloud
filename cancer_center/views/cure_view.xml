@@ -15,9 +15,14 @@
                         decoration-success="status_label == 'Injectée'"
                         decoration-warning="status_label == 'En attente'"
                         decoration-bf="status_label == 'Aujourd\'hui'"
+                        decoration-danger="status_label == 'Réaction'"
                     />
-                    <!-- decoration-danger="status_label == 'Réaction'" -->
-                    <!-- Icon + Label manually -->
+                <!-- Icon + Label manually -->
+                <button name="show_reactions"
+                        type="object" 
+                        icon="fa-exclamation-triangle" 
+                        title="Afficher les reactions"
+                />
             </tree>
         </field>
     </record>
