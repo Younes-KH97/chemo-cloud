@@ -1,11 +1,18 @@
 from odoo import models, fields, api
-from datetime import date
+from datetime import timedelta
 class Cure(models.Model):
     _name = "cancer_center.cure"
     _description = "Chemotherapy cure"
 
     protocol_assignment_id = fields.Many2one('cancer_center.protocol.assignment', 
                                              string='protocol_assignment')
+    patient_id = fields.Many2one(
+        'cancer_center.patient',
+        string="Patient",
+        related='protocol_assignment_id.patient_id',
+        store=False  # optional: True if you want to sort/search
+    )
+
     reaction_ids = fields.One2many('cancer_center.reaction', 'cure_id', string='reaction')
     height = fields.Float('height')
     weight = fields.Float('weight')
@@ -15,7 +22,8 @@ class Cure(models.Model):
     bsa = fields.Float('bsa', store=False)
     calculated_dose = fields.Float(compute='_compute_dose', store="True", string='dose')
     status_label = fields.Char(compute='_compute_status_label')
-
+            
+    
     @api.depends('calculated_dose', 'date_of_cure')
     def _compute_status_label(self):
         today = fields.Date.today()
@@ -36,6 +44,37 @@ class Cure(models.Model):
                 bsa = 0.007184 * (rec.weight ** 0.425) * (rec.height ** 0.725)
                 rec.bsa = round(bsa, 3)
                 rec.calculated_dose = round(bsa * rec.medication_id.posology, 2)
+
+                today = fields.date.today()
+                start_month = today.replace(day=1)
+                start_year = today.replace(day=1, month=1)
+                start_week = today - timedelta(days=today.weekday())
+
+                cure_stats_model = self.env["cancer_center.cure.statistics"]
+                stats_line = cure_stats_model.search([], limit=1)
+
+                total_today_cures = self.search_count([('date_of_cure','=', today), 
+                                                            ('calculated_dose','>','0')])
+                total_week_cures = self.search_count([('date_of_cure','>=', start_week), 
+                                    ('calculated_dose','>','0')])
+                total_month_cures = self.search_count([('date_of_cure','>=', start_month), 
+                                    ('calculated_dose','>','0')])
+                total_year_cures = self.search_count([('date_of_cure','>=', start_year), 
+                                    ('calculated_dose','>','0')]) 
+
+                if not stats_line:
+                    cure_stats_model.create({
+                        "total_today_cures": total_today_cures,
+                        "total_week_cures": total_week_cures,
+                        "total_month_cures": total_month_cures,
+                        "total_year_cures": total_year_cures         
+                    })
+                else:
+                    stats_line.write({
+                        "total_today_cures": total_today_cures,
+                        "total_week_cures": total_week_cures,
+                        "total_month_cures": total_month_cures,
+                        "total_year_cures": total_year_cures})
             else:
                 rec.bsa = 0.0
                 rec.calculated_dose = 0.0
@@ -53,3 +92,40 @@ class Cure(models.Model):
                 'default_cure_id': self.id
             }
         }
+    
+    # @api.model
+    # def create(self, vals):
+    #     cure = super().create(vals)
+
+    #     today = fields.date.today()
+    #     start_month = today.replace(day=1)
+    #     start_year = today.replace(day=1, month=1)
+    #     start_week = today - timedelta(days=today.weekday())
+
+    #     cure_stats_model = self.env["cancer_center.cure_statistics"]
+    #     stats_line = cure_stats_model.search([], limit=1)
+
+    #     total_today_cures = self.search_count([('date_of_cure','=', today), 
+    #                                                   ('calculated_dose','>','0')])
+    #     total_week_cures = self.search_count([('date_of_cure','>=', start_week), 
+    #                         ('calculated_dose','>','0')])
+    #     total_month_cures = self.search_count([('date_of_cure','>=', start_month), 
+    #                         ('calculated_dose','>','0')])
+    #     total_year_cures = self.search_count([('date_of_cure','>=', start_year), 
+    #                         ('calculated_dose','>','0')]) 
+
+    #     if not cure_stats_model:
+    #         cure_stats_model.create({
+    #             "total_today_cures": total_today_cures,
+    #             "total_week_cures": total_week_cures,
+    #             "total_month_cures": total_month_cures,
+    #             "total_year_cures": total_year_cures         
+    #         })
+    #     else:
+    #         stats_line.write({
+    #             "total_today_cures": total_today_cures,
+    #             "total_week_cures": total_week_cures,
+    #             "total_month_cures": total_month_cures,
+    #             "total_year_cures": total_year_cures})
+            
+    #     return cure

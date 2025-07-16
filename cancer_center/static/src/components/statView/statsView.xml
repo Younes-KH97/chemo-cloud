@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates xml:space="preserve">
+  <t t-name="cancer_center.StatsView">
+    <div class="o_container">
+      <h1>Tableau de bord des cures</h1>
+      <t t-if="state.cure_statistics.length">
+      <div class="row">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h4>Cures d'aujourd’hui</h4>
+              <span t-esc="state.cure_statistics[0].total_today_cures"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h4>Cures de cette semaine</h4>
+              <span t-esc="state.cure_statistics[0].total_week_cures"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h4>Cures de ce mois</h4>
+              <span t-esc="state.cure_statistics[0].total_month_cures"/>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- 
+    <t t-foreach="iteration" t-as="variable">
+        
+    </t> -->
+    <t t-name="cancer_center.Dashboard">
+        <div class="o_dashboard">
+            <h2>📅 Cures d'aujourd'hui</h2>
+            <table class="table table-sm table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Patient</th>
+                        <th>Médicament</th>
+                        <th>Taille (cm)</th>
+                        <th>Poids (kg)</th>
+                        <th>Dosage calculé</th>
+                        <th>Statut</th>
+                        <th>Réactions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="state.today_cures" t-as="cure" t-key="cure.id">
+                        <tr>
+                            <td><t t-esc="cure.patient_id ? cure.patient_id[1] : '—'"/></td>
+                            <td><t t-esc="cure.medication_id ? cure.medication_id[1] : '—'"/></td>
+                            <td><t t-esc="cure.height"/></td>
+                            <td><t t-esc="cure.weight"/></td>
+                            <td><t t-esc="cure.calculated_dose"/></td>
+                            <td><t t-esc="cure.status_label"/></td>
+                            <td><t t-esc="cure.reaction_ids.length"/> réaction(s)</td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+
+    </t>
+
+              <div class="o_subview_container">
+                <t t-set="action" t-value="{
+                    'type': 'ir.actions.act_window',
+                    'name': 'Cures',
+                    'res_model': 'cancer_center.cure',
+                    'view_mode': 'tree,form',
+                    'domain': [],
+                    'target': 'current'
+                }"/>
+                <t t-call="web.ActionManager">
+                    <t t-set="action" t-value="action"/>
+                </t>
+            </div>
+
+
+    </div>
+  </t>
+</templates>
