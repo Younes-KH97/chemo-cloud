@@ -4,6 +4,7 @@
         <field name="name">cancer_center.patient.view.form</field>
         <field name="model">cancer_center.patient</field>
         <field name="arch" type="xml">
+        
             <form string="">
                 <header>
                     <button string="Commencer un protocol" name="action_open_program_form"  type="object" class="oe_highlight"/>
@@ -24,6 +25,7 @@
         <field name="model">cancer_center.patient</field>
         <field name="arch" type="xml">
             <tree string="">
+
                 <field name="name" />
                 <field name="dob" />
             </tree>

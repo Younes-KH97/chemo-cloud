@@ -21,9 +21,9 @@
     
     'assets': {
         'web.assets_backend':[
+            'cancer_center/static/src/components/statView/statsView.scss',
             'cancer_center/static/src/components/statView/statsView.js',
             'cancer_center/static/src/components/statView/statsView.xml',
-            'cancer_center/static/src/components/statView/statsView.css',
         ]
 
     },

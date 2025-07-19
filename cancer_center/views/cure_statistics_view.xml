@@ -5,7 +5,6 @@
     <field name="name">Action Name</field>
     <field name="tag">cancer_center.action_stats_view</field>
     <!-- <field name="target">self</field> -->
-    
-</record>
+    </record>
 
 </odoo>

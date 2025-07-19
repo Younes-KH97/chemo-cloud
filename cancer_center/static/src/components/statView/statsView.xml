@@ -7,30 +7,40 @@
       <t t-if="state.cure_statistics.length">
       <div class="row">
         <div class="col-4">
-          <div class="card">
+          <div class="card dashboard-card">
             <div class="card-body">
-              <h4>Cures d'aujourd’hui</h4>
-              <span t-esc="state.cure_statistics[0].total_today_cures"/>
+              <div class="dashboard-title">Cures d’aujourd’hui</div>
+              <div class="dashboard-number" t-esc="state.cure_statistics[0].total_today_cures"/>
             </div>
           </div>
         </div>
         <div class="col-4">
-          <div class="card">
+          <div class="card dashboard-card">
             <div class="card-body">
-              <h4>Cures de cette semaine</h4>
-              <span t-esc="state.cure_statistics[0].total_week_cures"/>
+              <div class="dashboard-title">Cures de cette semaine</div>
+              <div class="dashboard-number" t-esc="state.cure_statistics[0].total_week_cures"/>
             </div>
           </div>
         </div>
         <div class="col-4">
-          <div class="card">
+          <div class="card dashboard-card">
             <div class="card-body">
-              <h4>Cures de ce mois</h4>
-              <span t-esc="state.cure_statistics[0].total_month_cures"/>
+              <div class="dashboard-title">Cures de ce mois</div>
+              <div class="dashboard-number" t-esc="state.cure_statistics[0].total_month_cures"/>
             </div>
           </div>
         </div>
+            <div style="display: flex; justify-content: center; margin: 1rem;">
+              <button     
+                  type="button"
+                  class="btn btn-primary"
+                  style="width: 50%;"
+                  t-on-click="openCureListView">
+                    Load today's cures
+              </button>
+            </div>
       </div>
+      </t>
 <!-- 
     <t t-foreach="iteration" t-as="variable">
         
@@ -67,23 +77,9 @@
         </div>
     </t>
 
-    </t>
-
-              <div class="o_subview_container">
-                <t t-set="action" t-value="{
-                    'type': 'ir.actions.act_window',
-                    'name': 'Cures',
-                    'res_model': 'cancer_center.cure',
-                    'view_mode': 'tree,form',
-                    'domain': [],
-                    'target': 'current'
-                }"/>
-                <t t-call="web.ActionManager">
-                    <t t-set="action" t-value="action"/>
-                </t>
-            </div>
-
+    
 
     </div>
+    <div class="tree-placeholder"></div>
   </t>
 </templates>

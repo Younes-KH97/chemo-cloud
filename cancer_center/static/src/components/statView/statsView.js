@@ -2,8 +2,8 @@
 
 import { Component, onMounted, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { rpc } from "@web/core/network/rpc_service";
 import { useService } from "@web/core/utils/hooks";
+
 
 export class StatsView extends Component {
 
@@ -57,6 +57,23 @@ export class StatsView extends Component {
                                 });
             console.log(result)
             this.state.today_cures = result;
+    }
+
+
+    openCureListView() {
+    const today = luxon.DateTime.now().toISODate();
+    this.env.services.action.doAction({
+        type: 'ir.actions.act_window',
+        name: 'Cures',
+        res_model: 'cancer_center.cure',
+        view_mode: 'tree,form',
+        views: [
+            [this.env.ref('cancer_center.cancer_center_patient_cure_view_tree').id, 'tree'],
+            [false, 'form']
+        ], // will use default view unless you specify ID
+        target: 'current',
+        domain: [['date_of_cure', '=', today]],
+    });
     }
 }
 
