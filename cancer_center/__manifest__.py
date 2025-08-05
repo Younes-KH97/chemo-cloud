@@ -7,6 +7,7 @@
         'base'
     ],
     'data':[
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/protocol_view.xml',
         'views/medication_view.xml',
@@ -21,9 +22,9 @@
     
     'assets': {
         'web.assets_backend':[
-            'cancer_center/static/src/components/statView/statsView.scss',
-            'cancer_center/static/src/components/statView/statsView.js',
-            'cancer_center/static/src/components/statView/statsView.xml',
+            'cancer_center/static/src/css/statsView.scss',
+            'cancer_center/static/src/js/statsView.js',
+            'cancer_center/static/src/xml/statsView.xml',
         ]
 
     },
